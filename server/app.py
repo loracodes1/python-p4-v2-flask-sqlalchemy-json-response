@@ -44,6 +44,19 @@ def pet_by_id(id):
 
     return make_response(body, status)
 
+@app.route('/species/<string:species>')
+def pet_by_species(species):
+    pets = []  # array to store a dictionary for each pet
+    for pet in Pet.query.filter_by(species=species).all():
+        pet_dict = {'id': pet.id,
+                    'name': pet.name,
+                    }
+        pets.append(pet_dict)
+    body = {'count': len(pets),
+            'pets': pets
+            }
+    return make_response(body, 200)
+
 
 
 if __name__ == '__main__':
