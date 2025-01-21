@@ -19,16 +19,6 @@ def index():
     body = {'message': 'Welcome to the pet directory!'}
     return make_response(body, 200)
 
-@app.route('/demo_json')
-def demo_json():
-    pet = Pet.query.first()
-    pet_dict = {'id': pet.id,
-                'name': pet.name,
-                'species': pet.species
-                }
-
-    return make_response(pet_dict, 200)
-
 @app.route('/pets/<int:id>')
 def pet_by_id(id):
     pet = Pet.query.filter(Pet.id == id).first()
@@ -56,8 +46,6 @@ def pet_by_species(species):
             'pets': pets
             }
     return make_response(body, 200)
-
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
