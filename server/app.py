@@ -29,5 +29,22 @@ def demo_json():
 
     return make_response(pet_dict, 200)
 
+@app.route('/pets/<int:id>')
+def pet_by_id(id):
+    pet = Pet.query.filter(Pet.id == id).first()
+
+    if pet:
+        body = {'id': pet.id,
+                'name': pet.name,
+                'species': pet.species}
+        status = 200
+    else:
+        body = {'message': f'Pet {id} not found.'}
+        status = 404
+
+    return make_response(body, status)
+
+
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
